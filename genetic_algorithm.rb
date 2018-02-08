@@ -11,7 +11,7 @@ def binary_tournament(pop)
 end
 
 def point_mutation(bitstring, rate=1.0/bitstring.size)
-  bitstring.map{|x| (rand() > 0.98) ? (x ? 1 : 0): x}
+  bitstring.map{|x| (rand() < rate) ? ( x == 1 ? 0 : 1): x}
 end
 
 def crossover(parent1, parent2, rate)
@@ -25,7 +25,7 @@ end
 def reproduce(selected, pop_size, p_cross, p_mutation)
   children = []
 
-  pop_size.times do
+  selected.length.times do
     p1, p2 = selected.sample(2)
     children << point_mutation(crossover(p1, p2, p_cross), p_mutation)
   end
